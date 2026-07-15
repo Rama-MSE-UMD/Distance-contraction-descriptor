@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Results — {{ st_name }}</title>
+<style>
+  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; max-width: 760px; margin: 40px auto; padding: 0 20px; color: #1a1a1a; }
+  h1 { font-size: 1.4rem; }
+  table { border-collapse: collapse; width: 100%; margin-top: 12px; font-size: 0.85rem; }
+  th, td { border: 1px solid #ddd; padding: 6px 10px; text-align: left; }
+  th { background: #f4f4f4; }
+  a.button { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #1a1a1a; color: white; border-radius: 6px; text-decoration: none; }
+  a.button:hover { background: #333; }
+  a.back { display: inline-block; margin-top: 14px; color: #555; font-size: 0.9rem; }
+  .meta { color: #555; margin-top: -6px; }
+  h2 { font-size: 1.05rem; margin-top: 28px; }
+</style>
+</head>
+<body>
+  <h1>Results — {{ st_name }}</h1>
+  <p class="meta">Composition: {{ composition }}</p>
+
+  <h2>Distance-contraction summary (Å)</h2>
+  <table>
+    <tr><th>Reference</th><th>0-D</th><th>1-D</th><th>2-D</th><th>3-D</th></tr>
+    {% for row in summary_rows %}
+    <tr>
+      <td>{{ row.reference }}</td>
+      <td>{{ row["0-D"] if row["0-D"] is not none else "—" }}</td>
+      <td>{{ row["1-D"] if row["1-D"] is not none else "—" }}</td>
+      <td>{{ row["2-D"] if row["2-D"] is not none else "—" }}</td>
+      <td>{{ row["3-D"] if row["3-D"] is not none else "—" }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <h2>Per-path overview</h2>
+  <table>
+    <tr>{% for c in table_columns %}<th>{{ c }}</th>{% endfor %}</tr>
+    {% for row in table %}
+      <tr>{% for c in table_columns %}<td>{{ row[c] }}</td>{% endfor %}</tr>
+    {% endfor %}
+  </table>
+
+  <a class="button" href="{{ url_for('download', zip_name=zip_name) }}">Download all results (.zip)</a>
+  <br>
+  <a class="back" href="{{ url_for('index') }}">&larr; Run another structure</a>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Distance Contraction — Ion-Migration Pathway Screener</title>
+<style>
+  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 20px; color: #1a1a1a; }
+  h1 { font-size: 1.4rem; }
+  p.subtitle { color: #555; margin-top: -8px; }
+  label { display: block; margin-top: 18px; font-weight: 600; font-size: 0.9rem; }
+  select, input[type=file], input[type=number] { margin-top: 6px; padding: 8px; width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; }
+  button { margin-top: 24px; padding: 10px 20px; background: #1a1a1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; }
+  button:hover { background: #333; }
+  .flash { background: #fdecea; color: #611a15; padding: 10px 14px; border-radius: 6px; margin-bottom: 16px; }
+  .hint { color: #777; font-size: 0.85rem; margin-top: 4px; }
+  .note { background: #f4f4f4; padding: 12px 14px; border-radius: 6px; font-size: 0.85rem; margin-top: 28px; color: #444; }
+</style>
+</head>
+<body>
+  <h1>Distance Contraction — Ion-Migration Pathway Screener</h1>
+  <p class="subtitle">Screen candidate ion-migration pathways in solid-state electrolytes.</p>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for m in messages %}
+        <div class="flash">{{ m }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form action="{{ url_for('run') }}" method="post" enctype="multipart/form-data">
+    <label for="cif_file">CIF file</label>
+    <input type="file" id="cif_file" name="cif_file" accept=".cif" required>
+    <div class="hint">File name is used as the structure name (e.g. 29962.cif or 29962_ord_rama.cif)</div>
+
+    <label for="element">Mobile ion element</label>
+    <select id="element" name="element">
+      {% for el in elements %}
+        <option value="{{ el }}">{{ el }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="max_path_length">Max hop distance (Å)</label>
+    <input type="number" id="max_path_length" name="max_path_length" value="7" min="3" max="7" step="1">
+
+    <label for="nimages"># of NEB images</label>
+    <input type="number" id="nimages" name="nimages" value="5" min="3" max="13" step="2">
+
+    <label for="create_folder">Save per-path CIF files too?</label>
+    <select id="create_folder" name="create_folder">
+      <option value="No" selected>No — faster, just the summary + data CSVs</option>
+      <option value="Yes">Yes — include all intermediate structure files</option>
+    </select>
+
+    <button type="submit">Run analysis</button>
+  </form>
+
+  <div class="note">
+    This runs a full symmetry + NEB pathway analysis and can take a while
+    depending on structure size and number of candidate paths — please be
+    patient after clicking Run.
+  </div>
+</body>
+</html>

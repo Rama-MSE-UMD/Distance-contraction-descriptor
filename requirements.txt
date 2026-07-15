@@ -1,0 +1,4 @@
+# ── Package installation (Colab) ──────────────────────────────────────────
+# Skip if packages are already installed in your local environment.
+!pip install --upgrade --quiet ase
+!pip install --quiet pymatgen==2025.6.14 natsort

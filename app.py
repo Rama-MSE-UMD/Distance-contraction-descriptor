@@ -12,9 +12,11 @@ import pipeline
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-change-me")
 
-# Reference data (periodic table, bond-distance stats) is shared and static —
-# download it once into a persistent cache directory at startup.
-REFERENCE_CACHE = os.path.join(os.path.dirname(__file__), "_reference_cache")
+# Reference data (periodic table, bond-distance stats) already ships in the
+# repo alongside app.py — no need to fetch it over the network at all.
+# setup_reference_data() only downloads a file if it's missing locally, so
+# pointing it at this directory just loads what's already deployed.
+REFERENCE_CACHE = os.path.dirname(os.path.abspath(__file__))
 pipeline.setup_reference_data(REFERENCE_CACHE)
 
 # run_pipeline() uses os.chdir() internally, which is process-wide state.

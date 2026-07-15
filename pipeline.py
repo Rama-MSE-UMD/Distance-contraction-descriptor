@@ -66,7 +66,7 @@ _REFERENCE_FILES = [
 # functions below (mirrors how the original notebook used bare globals).
 bond_mean_stddev_na = bond_mean_stddev_li = bond_mean_stddev_k = None
 bond_mean_stddev_mg = bond_mean_stddev_ca = bond_mean_stddev_al = None
-bond_mean_stddev_zn = None
+# bond_mean_stddev_zn = None
 Periodic_table_data = None
 most_common_oxidation_states = None
 _ION_PARAMS = None
@@ -83,7 +83,7 @@ def setup_reference_data(cache_dir):
     """
     global bond_mean_stddev_na, bond_mean_stddev_li, bond_mean_stddev_k
     global bond_mean_stddev_mg, bond_mean_stddev_ca, bond_mean_stddev_al
-    global bond_mean_stddev_zn, Periodic_table_data
+    global Periodic_table_data # bond_mean_stddev_zn,
     global most_common_oxidation_states, _ION_PARAMS, _OXI_STATE, _BOND_STDDEV
     global _REFERENCE_READY
 

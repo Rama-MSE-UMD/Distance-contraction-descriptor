@@ -385,7 +385,7 @@ def check_connectivity(structure, cutoff):
 def path_bond_distances_cutoff(structure1, structure2, coords1, coords2,
                                element_symbol, bond_std, na_cat_dist,
                                min_distances_by_element,
-                               cutoff=6.0):
+                               cutoff=4.0):
     """Collect nearest-neighbour bond distances at both ends of a hop path.
 
     Returns
@@ -401,9 +401,8 @@ def path_bond_distances_cutoff(structure1, structure2, coords1, coords2,
 
     distance_stats = {}
     for pair, distances in neighbor_data.items():
-        m = bond_std.iloc[list(bond_std["Element"]).index(pair[1])]["Mean_Distance"]
-        min_dist = min(distances) or m
-        filtered = [d for d in distances if d and d <= min_dist + 0.7] or [m]
+        min_dist = min(distances)
+        filtered = [d for d in distances if d and d <= min_dist + 0.7] 
         distance_stats[pair] = {
             "min_distance": min_dist,
             "max_distance": max(filtered),

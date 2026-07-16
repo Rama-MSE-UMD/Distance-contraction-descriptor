@@ -320,10 +320,7 @@ def path_bond_distances_cutoff(structure1, structure2, coords1, coords2,
 
     distance_stats = {}
     for pair, distances in neighbor_data.items():
-        if pair[1] == anion_symbol:
-            m = min_distances_by_element[element_symbol]
-        else:
-            m = na_cat_dist[pair[1]]
+        m = bond_std.iloc[list(bond_std["Element"]).index(pair[1])]["Mean_Distance"]
         min_dist = min(distances) or m
         filtered = [d for d in distances if d and d <= min_dist + 0.7] or [m]
         distance_stats[pair] = {

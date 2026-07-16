@@ -304,7 +304,7 @@ def check_connectivity(structure, cutoff):
 def path_bond_distances_cutoff(structure1, structure2, coords1, coords2,
                                element_symbol, anion_symbol, na_cat_dist,
                                min_distances_by_element,
-                               cutoff=6.0):
+                               cutoff=4.0):
     """Collect nearest-neighbour bond distances at both ends of a hop path.
 
     Returns

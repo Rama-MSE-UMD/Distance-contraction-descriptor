@@ -736,6 +736,7 @@ def run_pipeline(element_symbol, element_oxi, st_name,
                               for pr, st in path_dist_raw.items()}
         path_distances_avg = {pr[1]: st["avg_distance"]
                               for pr, st in path_dist_raw.items()}
+        print("Path distances avg:",path_distances_avg)
         struct_orig = struct_ref.copy()
         struct_orig.add_oxidation_state_by_element(oxidation_dict)
 

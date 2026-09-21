@@ -1,5 +1,0 @@
-flask
-gunicorn
-ase
-pymatgen==2025.6.14
-natsort
